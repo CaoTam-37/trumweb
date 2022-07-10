@@ -48,7 +48,7 @@ const Arrow = () => {
 
   const handleDown = () => {
     window.scrollTo({
-      top: window.pageYOffset + 500,
+      top: window.pageYOffset + 5000,
       left: 0,
       behavior: "smooth",
     });
@@ -58,14 +58,15 @@ const Arrow = () => {
   const showArrow = () => {
     if (window.innerWidth < 1440) {
       setArrow(false);
-      console.log(arrow)
+      console.log(arrow);
     } else {
       setArrow(true);
     }
   };
-  useEffect(()=>{
-    showArrow()
-  })
+  useEffect(() => {
+    showArrow();
+  });
+  
   return (
     <>
       <div class='arrow-left-box'>
