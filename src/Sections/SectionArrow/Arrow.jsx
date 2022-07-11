@@ -48,7 +48,7 @@ const Arrow = () => {
 
   const handleDown = () => {
     window.scrollTo({
-      top: window.pageYOffset + 5000,
+      top: window.pageYOffset + 500,
       left: 0,
       behavior: "smooth",
     });
