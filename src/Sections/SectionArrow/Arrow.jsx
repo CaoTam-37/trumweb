@@ -5,8 +5,9 @@ import pic0 from "../../Img/15.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLongArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
+
 const Arrow = () => {
-  const [pageYStart, setPageYStart] = useState(0);
+  // const [pageYStart, setPageYStart] = useState(0);
   const [arrowAni, setArrowAni] = useState(false);
   //  add animation
   const location = useLocation();
@@ -37,23 +38,52 @@ const Arrow = () => {
     rightArrowClass = "btn-down slideInDown1";
   }
   // end
+  //function up&down
+  const container0 = document.querySelector(".main-container")
+
+  const container2 = document.querySelector(".main-container-2");
+  const container1 = document.querySelector(".main-container-1")
+  const highlightContainer = document.querySelector(".highlight-container")
+
   const handleUp = () => {
-    setPageYStart(window.pageYOffset);
+    let x = container2.getBoundingClientRect().y;
+    if(window.pageYOffset > 2115 && window.pageYOffset < 3190){
+      x = container0.getBoundingClientRect().y
+    }else if(window.pageYOffset > 3190 && window.pageYOffset < 4710){
+      x = container2.getBoundingClientRect().y ;
+    }else if(window.pageYOffset > 4710){
+      x = container1.getBoundingClientRect().y
+    }
     window.scrollTo({
-      top: window.pageYOffset - 500,
+      top: window.pageYOffset + x,
       left: 0,
       behavior: "smooth",
     });
+     console.log(window.pageYOffset)
+     
+    // console.log(window.pageYOffset + x);
   };
 
   const handleDown = () => {
+    let x = container2.getBoundingClientRect().y ;
+    if(window.pageYOffset <1400){
+      x = container2.getBoundingClientRect().y ;
+    }else if(window.pageYOffset > 1400 && window.pageYOffset < 2560){
+      x = container1.getBoundingClientRect().y
+    }else if(window.pageYOffset > 2560 && window.pageYOffset < 4090){
+      x = highlightContainer.getBoundingClientRect().y
+    }
     window.scrollTo({
-      top: window.pageYOffset + 500010000,
+      top: window.pageYOffset + x,
       left: 0,
       behavior: "smooth",
     });
+// console.log(window.pageYOffset)
+    // console.log(container2.getBoundingClientRect().y)
+    //  console.log(window.pageYOffset + x)
   };
-  console.log("teststst");
+  //end
+
   const [arrow, setArrow] = useState(true);
   const showArrow = () => {
     if (window.innerWidth < 1440) {

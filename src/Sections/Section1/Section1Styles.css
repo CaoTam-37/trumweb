@@ -111,7 +111,7 @@
   /* border: 2px solid rgb(10, 248, 105); */
   position: relative;
   margin: 0px auto;
-  margin-top: 50px;
+  /* margin-top: 50px; */
   padding: 0px 0px !important;
   font-family: "Montserrat", "Robotot";
 }
@@ -734,6 +734,7 @@
     width: 1200px;
   }
   .box-1{
+    padding-top: 75px;
     padding-bottom: 100px;
   }
   .content-1 {
