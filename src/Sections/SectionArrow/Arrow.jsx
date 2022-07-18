@@ -74,7 +74,7 @@ const Arrow = () => {
       x = highlightContainer.getBoundingClientRect().y
     }
     window.scrollTo({
-
+      top: window.pageYOffset + x,
       left: 0,
       behavior: "smooth",
     });
