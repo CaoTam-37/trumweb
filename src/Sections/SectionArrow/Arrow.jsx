@@ -39,49 +39,111 @@ const Arrow = () => {
   }
   // end
   //function up&down
-  const container0 = document.querySelector(".main-container")
-
+  //main site
+  const container0 = document.querySelector(".main-container");
   const container2 = document.querySelector(".main-container-2");
-  const container1 = document.querySelector(".main-container-1")
-  const highlightContainer = document.querySelector(".highlight-container")
+  const container1 = document.querySelector(".main-container-1");
+  const highlightContainer = document.querySelector(".highlight-container");
+  //news site
+  const headlineBox = document.querySelector(".headline-box");
+  const newsPart0 = document.querySelector(".news-part-0");
+  const newsPart1 = document.querySelector(".news-part-1");
 
   const handleUp = () => {
-    let x = container2.getBoundingClientRect().y;
-    if(window.pageYOffset > 2115 && window.pageYOffset < 3190){
-      x = container0.getBoundingClientRect().y
-    }else if(window.pageYOffset > 3190 && window.pageYOffset < 4710){
-      x = container2.getBoundingClientRect().y ;
-    }else if(window.pageYOffset > 4710){
-      x = container1.getBoundingClientRect().y
+    let x;
+    if (location.pathname === "/") {
+      if (window.pageYOffset > 2115 && window.pageYOffset < 3190) {
+        x = container0.getBoundingClientRect().y;
+      } else if (window.pageYOffset > 3190 && window.pageYOffset < 4710) {
+        x = container2.getBoundingClientRect().y;
+      } else if (window.pageYOffset > 4710) {
+        x = container1.getBoundingClientRect().y;
+      }
+    } else if (location.pathname === "/news") {
+      const headlineBox = document.querySelector(".headline-box");
+      const newsPart0 = document.querySelector(".news-part-0");
+      const newsPart1 = document.querySelector(".news-part-1");
+      if (window.pageYOffset > 1685 && window.pageYOffset < 2950) {
+        x = headlineBox.getBoundingClientRect().y;
+      } else if (window.pageYOffset > 2950) {
+        x = newsPart0.getBoundingClientRect().y;
+      }
     }
+
     window.scrollTo({
       top: window.pageYOffset + x,
       left: 0,
       behavior: "smooth",
     });
-     console.log(window.pageYOffset)
-     
+    console.log(window.pageYOffset);
+
     // console.log(window.pageYOffset + x);
   };
 
   const handleDown = () => {
-    let x = container2.getBoundingClientRect().y ;
-    if(window.pageYOffset <1400){
-      x = container2.getBoundingClientRect().y ;
-    }else if(window.pageYOffset > 1400 && window.pageYOffset < 2560){
-      x = container1.getBoundingClientRect().y
-    }else if(window.pageYOffset > 2560 && window.pageYOffset < 4090){
-      x = highlightContainer.getBoundingClientRect().y
+    let x;
+    if (location.pathname === "/") {
+      if (window.pageYOffset < 1400) {
+        x = container2.getBoundingClientRect().y;
+      } else if (window.pageYOffset > 1400 && window.pageYOffset < 2560) {
+        x = container1.getBoundingClientRect().y;
+      } else if (window.pageYOffset > 2560 && window.pageYOffset < 4090) {
+        x = highlightContainer.getBoundingClientRect().y;
+      }
+    } else if (location.pathname === "/news") {
+      const headlineBox = document.querySelector(".headline-box");
+      const newsPart0 = document.querySelector(".news-part-0");
+      const newsPart1 = document.querySelector(".news-part-1");
+      if (window.pageYOffset < 840) {
+        x = newsPart0.getBoundingClientRect().y;
+      } else if (window.pageYOffset > 840 && window.pageYOffset < 2182) {
+        x = newsPart1.getBoundingClientRect().y;
+      }
     }
     window.scrollTo({
       top: window.pageYOffset + x,
       left: 0,
       behavior: "smooth",
     });
-// console.log(window.pageYOffset)
+    // console.log(window.pageYOffset)
     // console.log(container2.getBoundingClientRect().y)
     //  console.log(window.pageYOffset + x)
   };
+  //main site end
+  //news site
+  // const handleUp1 = () => {
+  //   let x;
+  //   if (window.pageYOffset > 1685 && window.pageYOffset < 2950) {
+  //     x = headlineBox.getBoundingClientRect().y;
+  //   } else if (window.pageYOffset > 2950) {
+  //     x = newsPart0.getBoundingClientRect().y;
+  //   }
+  //   window.scrollTo({
+  //     top: window.pageYOffset + x,
+  //     left: 0,
+  //     behavior: "smooth",
+  //   });
+  //   console.log(location.pathname);
+  // };
+
+  // const handleDown1 = () => {
+  //   let x;
+  //   if (window.pageYOffset < 840) {
+  //     x = newsPart0.getBoundingClientRect().y;
+  //   } else if (window.pageYOffset > 840 && window.pageYOffset < 2182) {
+  //     x = newsPart1.getBoundingClientRect().y;
+  //   }
+
+  //   window.scrollTo({
+  //     top: window.pageYOffset + x,
+  //     left: 0,
+  //     behavior: "smooth",
+  //   });
+  //   console.log(window.pageYOffset);
+  //   // console.log(container2.getBoundingClientRect().y)
+  //   //  console.log(window.pageYOffset + x)
+  // };
+  //news site end
   //end
 
   const [arrow, setArrow] = useState(true);
@@ -101,14 +163,24 @@ const Arrow = () => {
     <>
       <div class='arrow-left-box'>
         {arrow === true && (
-          <button onClick={() => handleUp()} className={leftArrowClass}>
+          <button
+            onClick={() => {
+              handleUp();
+            }}
+            className={leftArrowClass}
+          >
             <img src={pic0} alt='' className='arrow-up' />
           </button>
         )}
       </div>
       <div className='arrow-right-box'>
         {arrow === true && (
-          <button onClick={() => handleDown()} className={rightArrowClass}>
+          <button
+            onClick={() => {
+              handleDown();
+            }}
+            className={rightArrowClass}
+          >
             <img src={pic0} alt='' className='arrow-down' />
           </button>
         )}

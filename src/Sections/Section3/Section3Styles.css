@@ -166,6 +166,7 @@
   }
   .portfolio-container{
     margin: 50px auto;
+    margin-bottom: 0px;
   }
   .portfolio-grid {
     width: 100%;

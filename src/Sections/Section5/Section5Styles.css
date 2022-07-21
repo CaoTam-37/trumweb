@@ -280,6 +280,7 @@ transform: scale(1.1);
   color: black;
   text-transform: uppercase;
   margin-bottom: 1.5rem;
+  padding-top: 75px;
   font-size: 2.2rem;
 }
 .news-box p {
