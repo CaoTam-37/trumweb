@@ -80,7 +80,7 @@ const Section5 = () => {
               </div>
             </div>
           </div>
-          <div className='news-box'>
+          <div className='news-box news-part-0'>
             <h1 className='title'>Lorem ipsum dolor sit amet.</h1>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
@@ -97,7 +97,7 @@ const Section5 = () => {
               <img src={pic1} alt='' className='img-news' />
             </div>
           </div>
-          <div className='news-box'>
+          <div className='news-box news-part-1'>
             <h1 className='title'>Lorem ipsum dolor sit amet.</h1>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta

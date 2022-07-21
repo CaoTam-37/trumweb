@@ -233,7 +233,7 @@
 }
 @media (min-width: 768px) {
   .highlight-grid{
-    padding-top: 0px;
+    /* padding-top: 0px; */
   }
   .highlight-grid {
     width: 100%;
