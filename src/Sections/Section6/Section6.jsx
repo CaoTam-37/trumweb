@@ -12,7 +12,7 @@ const Section6 = () => {
     let logoContainerY = logoContainer.getBoundingClientRect().y;
 
     if (logoContainerY < 1200) {
-      console.log(logoContainerY);
+      //console.log(logoContainerY);
       let x = logoContainerY / 120;
       row0.style.transform = `translateX(${0 - x - 10}% )`;
       row1.style.transform = `translateX(${x + (-1)}% )`;

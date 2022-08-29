@@ -2,6 +2,7 @@
   --hover-item-fontsize: 15px;
   --top-hover-item-fontsize: 25px;
 }
+
 .main-container-1 {
   /* border: 2px solid yellow; */
   position: relative;
@@ -61,7 +62,7 @@
 }
 .item {
   /* border: 2px solid rgb(89, 196, 90); */
-  width: 80%;
+  /* width: 80%; */
   height: 60%;
   margin: auto;
   display: flex;

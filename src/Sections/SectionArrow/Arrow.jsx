@@ -45,9 +45,6 @@ const Arrow = () => {
   const container1 = document.querySelector(".main-container-1");
   const highlightContainer = document.querySelector(".highlight-container");
   //news site
-  const headlineBox = document.querySelector(".headline-box");
-  const newsPart0 = document.querySelector(".news-part-0");
-  const newsPart1 = document.querySelector(".news-part-1");
 
   const handleUp = () => {
     let x;
@@ -62,7 +59,7 @@ const Arrow = () => {
     } else if (location.pathname === "/news") {
       const headlineBox = document.querySelector(".headline-box");
       const newsPart0 = document.querySelector(".news-part-0");
-      const newsPart1 = document.querySelector(".news-part-1");
+
       if (window.pageYOffset > 1685 && window.pageYOffset < 2950) {
         x = headlineBox.getBoundingClientRect().y;
       } else if (window.pageYOffset > 2950) {
@@ -91,7 +88,6 @@ const Arrow = () => {
         x = highlightContainer.getBoundingClientRect().y;
       }
     } else if (location.pathname === "/news") {
-      const headlineBox = document.querySelector(".headline-box");
       const newsPart0 = document.querySelector(".news-part-0");
       const newsPart1 = document.querySelector(".news-part-1");
       if (window.pageYOffset < 840) {
@@ -110,40 +106,6 @@ const Arrow = () => {
     //  console.log(window.pageYOffset + x)
   };
   //main site end
-  //news site
-  // const handleUp1 = () => {
-  //   let x;
-  //   if (window.pageYOffset > 1685 && window.pageYOffset < 2950) {
-  //     x = headlineBox.getBoundingClientRect().y;
-  //   } else if (window.pageYOffset > 2950) {
-  //     x = newsPart0.getBoundingClientRect().y;
-  //   }
-  //   window.scrollTo({
-  //     top: window.pageYOffset + x,
-  //     left: 0,
-  //     behavior: "smooth",
-  //   });
-  //   console.log(location.pathname);
-  // };
-
-  // const handleDown1 = () => {
-  //   let x;
-  //   if (window.pageYOffset < 840) {
-  //     x = newsPart0.getBoundingClientRect().y;
-  //   } else if (window.pageYOffset > 840 && window.pageYOffset < 2182) {
-  //     x = newsPart1.getBoundingClientRect().y;
-  //   }
-
-  //   window.scrollTo({
-  //     top: window.pageYOffset + x,
-  //     left: 0,
-  //     behavior: "smooth",
-  //   });
-  //   console.log(window.pageYOffset);
-  //   // console.log(container2.getBoundingClientRect().y)
-  //   //  console.log(window.pageYOffset + x)
-  // };
-  //news site end
   //end
 
   const [arrow, setArrow] = useState(true);

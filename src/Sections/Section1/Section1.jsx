@@ -3,127 +3,31 @@ import { useLocation } from "react-router-dom";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import pic0 from "../../Img/13.jpg";
 import pic1 from "../../Img/14c.jpg";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
 import "./Section1Styles.css";
-import { useInsertionEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addAni, addAni1 } from "../../features/sections/sectionsSlice";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
+// import { useInsertionEffect } from "react";
 
+let isDown = false;
+let startX = 0;
+let walk = 0;
+let check0 = 0;
+let check1 = 0;
+let count = 0;
 let widthOfCart;
+
 const Section1 = () => {
-  const [isDown, setIsDown] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [walk, setWalk] = useState(0);
-  const [check0, setCheck0] = useState(0);
-  const [check1, setCheck1] = useState(0);
-  const [count, setCount] = useState(0);
+  const { box1Ani,box2Ani, first, second,third,forth, img } = useSelector((state) => state.sections.data.section1);
+  const dispatch = useDispatch();
   const isMounted = useRef(false);
-
-  const [box1Ani, setBox1Ani] = useState(false);
-  const [box2Ani, setBox2Ani] = useState(false);
-
   //Add slider function
   //MouseEvent
+
   const containerSlider = document.querySelector(".team-info");
   const slider = document.querySelector(".team-info-slider");
   let x;
-  // const widthOfCart = document.querySelector('.employee-cart').getBoundingClientRect().width
-  const mouseDown = (e) => {
-    setIsDown(true);
-    // setStartX(e.nativeEvent.offsetX - slider.offsetLeft);
-    // setCheck0(e.nativeEvent.offsetX);
-    setStartX(e.clientX - slider.offsetLeft);
-    setCheck0(e.clientX);
-    containerSlider.style.cursor = "grabbing";
-    console.log(e.clientX);
-  };
-  const mouseLeave = (e) => {
-    setIsDown(false);
-  };
-  const mouseUp = (e) => {
-    containerSlider.style.cursor = "grab";
-    setIsDown(false);
-    if (walk < -50 && check1 < -250) {
-      setCount(count - 2);
-    } else if (walk < -50 && check1 < -80) {
-      setCount(count - 1);
-    }
-    if (check1 > 550) {
-      setCount(count + 2);
-    } else if (check1 > 50) {
-      setCount(count + 1);
-    }
-
-    if (count > 0) {
-      setCount(0);
-    } else if (count < -3) {
-      setCount(-3);
-    }
-    slider.style.left = `${count * 380}px`; //smooth effect(delete to see)
-    slider.style.transition = "all 0.5s ease-in-out";
-    // console.log(count)
-  };
-  const mouseMove = (e) => {
-    if (!isDown) return;
-    e.preventDefault();
-    x = e.clientX;
-    setWalk(x - startX);
-    //  console.log(walk)
-    //  console.log(startX)
-    // console.log(e.offsetParent);
-    slider.style.transition = "";
-    if (walk < 0 && walk > -1140) {
-      slider.style.left = `${x - startX}px`;
-    }
-
-    //check left or right
-    setCheck1(x - check0);
-    //  console.log(check1)
-  };
-  //touchEvent
-  const touchStart = (e) => {
-    setIsDown(true);
-    setStartX(e.touches[0].clientX - slider.offsetLeft);
-    setCheck0(e.touches[0].clientX);
-    console.log(e.touches[0].clientX);
-  };
-
-  const touchEnd = () => {
-    setIsDown(false);
-    if (walk < -50 && check1 < -250) {
-      setCount(count - 2);
-    } else if (walk < -50 && check1 < -80) {
-      setCount(count - 1);
-    }
-    if (check1 > 550) {
-      setCount(count + 2);
-    } else if (check1 > 50) {
-      setCount(count + 1);
-    }
-
-    // if (count > 0) {
-    //   setCount(0);
-    // } else if (count < -3) {
-    //   setCount(-3);
-    // }
-    slider.style.left = `${count * 380}px`; //smooth effect(delete to see)
-    slider.style.transition = "all 0.5s ease-in-out";
-    console.log(count);
-  };
-  const touchMove = (e) => {
-    if (!isDown) return;
-    // e.preventDefault();
-    x = e.touches[0].clientX;
-    setWalk(x - startX);
-
-    slider.style.transition = "";
-    if (walk < 0 && walk > -1140) {
-      slider.style.left = `${x - startX}px`;
-    }
-
-    //check left or right
-    setCheck1(x - check0);
-    //  console.log(check1)
-  };
   const checkClientWidth = () => {
     if (window.innerWidth < 768 || window.innerWidth >= 1440) {
       widthOfCart = 380;
@@ -133,85 +37,164 @@ const Section1 = () => {
       widthOfCart = 320;
     }
   };
-  useEffect(() => {
+  const mouseDown = (e) => {
     checkClientWidth();
-    if (isMounted.current) {
-      slider.style.left = `${count * widthOfCart}px`;
-      if (window.innerWidth < 768) {
-        if (count > 0) {
-          setCount(0);
-        } else if (count < -5) {
-          setCount(-5);
-        }
-      } else if (768 <= window.innerWidth && window.innerWidth < 1024) {
-        if (count > 0) {
-          setCount(0);
-        } else if (count < -4) {
-          setCount(-4);
-        }
-      } else if (window.innerWidth >= 1024) {
-        if (count > 0) {
-          setCount(0);
-        } else if (count < -3) {
-          setCount(-3);
-        }
-      }
-    } else {
-      isMounted.current = true;
+    const containerSlider = document.querySelector(".team-info");
+    const slider = document.querySelector(".team-info-slider");
+    containerSlider.style.cursor = "grabbing";
+    isDown = true;
+    startX = e.clientX - slider.offsetLeft;
+    check0 = e.clientX;
+  };
+  const mouseLeave = (e) => {
+    isDown = false;
+  };
+  const mouseUp = (e) => {
+    const containerSlider = document.querySelector(".team-info");
+    const slider = document.querySelector(".team-info-slider");
+    containerSlider.style.cursor = "grab";
+    isDown = false;
+    if (walk < -50 && check1 < -250) {
+      count = count - 2;
+    } else if (walk < -50 && check1 < -80) {
+      count = count - 1;
     }
-  }, [count]);
+    if (check1 > 550) {
+      count = count + 2;
+    } else if (check1 > 50) {
+      count = count + 1;
+    }
+
+    if (window.innerWidth < 768) {
+      if (count > 0) {
+        count = 0;
+      } else if (count < -5) {
+        count = -5;
+      }
+    } else if (768 <= window.innerWidth && window.innerWidth < 1024) {
+      if (count > 0) {
+        count = 0;
+      } else if (count < -4) {
+        count = -4;
+      }
+    } else if (window.innerWidth >= 1024) {
+      if (count > 0) {
+        count = 0;
+      } else if (count < -3) {
+        count = -3;
+      }
+    }
+    slider.style.left = `${count * widthOfCart}px`;
+    slider.style.transition = "all 0.5s ease-in-out";
+  };
+  const mouseMove = (e) => {
+    const slider = document.querySelector(".team-info-slider");
+    if (!isDown) return;
+    e.preventDefault();
+    x = e.clientX;
+
+    walk = x - startX;
+
+    slider.style.transition = "";
+    if (walk < 0 && walk > -1240) {
+      slider.style.left = `${x - startX}px`;
+    }
+
+    check1 = x - check0;
+  };
+  //touchEvent
+  const touchStart = (e) => {
+    const slider = document.querySelector(".team-info-slider");
+    checkClientWidth();
+    isDown = true;
+    startX = e.touches[0].clientX - slider.offsetLeft;
+    check0 = e.touches[0].clientX;
+  };
+  const touchEnd = () => {
+    const slider = document.querySelector(".team-info-slider");
+    isDown = false;
+    if (walk < -50 && check1 < -250) {
+      count = count - 2;
+    } else if (walk < -50 && check1 < -80) {
+      count = count - 1;
+    }
+    if (check1 > 550) {
+      count = count + 2;
+    } else if (check1 > 50) {
+      count = count + 1;
+    }
+    if (window.innerWidth < 768) {
+      if (count > 0) {
+        count = 0;
+      } else if (count < -5) {
+        count = -5;
+      }
+    } else if (768 <= window.innerWidth && window.innerWidth < 1024) {
+      if (count > 0) {
+        count = 0;
+      } else if (count < -4) {
+        count = -4;
+      }
+    } else if (window.innerWidth >= 1024) {
+      if (count > 0) {
+        count = 0;
+      } else if (count < -3) {
+        count = -3;
+      }
+    }
+
+    slider.style.left = `${count * widthOfCart}px`;
+    slider.style.transition = "all 0.5s ease-in-out";
+  };
+  const touchMove = (e) => {
+    const slider = document.querySelector(".team-info-slider");
+    if (!isDown) return;
+    // e.preventDefault();
+    x = e.touches[0].clientX;
+
+    walk = x - startX;
+
+    slider.style.transition = "";
+    if (walk < 0 && walk > -1240) {
+      slider.style.left = `${x - startX}px`;
+    }
+
+    //check left or right
+
+    check1 = x - check0;
+  };
+
   //end
 
   //Add animation
   const location = useLocation();
-  let testClass = "test";
-  let imgClasss = "";
-  let introTeamInfoClass = "intro-team-info";
-  let employeeCartClass = "employee-cart";
-  let flameClass = "";
+  const test = ()=>{
+
+  }
   if (location.pathname === "/") {
     window.addEventListener("scroll", () => {
       const section0 = document.querySelector(".section0");
       const section0Height = section0.getBoundingClientRect().height;
       const box1 = document.querySelector(".box-1");
       const box1Height = box1.getBoundingClientRect().height;
-      // console.log(box1);
-      // console.log(box1Height);
-      if (window.pageYOffset > section0Height + box1Height / 5) {
-        setBox2Ani(true);
-        // console.log(box2Ani)
-      } else if (window.pageYOffset > section0Height / 3.5) {
-        setBox1Ani(true);
-        // console.log(box1Ani);
+      if (window.pageYOffset > section0Height + box1Height / 7) {
+        dispatch(addAni1());
+      }
+      if (window.pageYOffset > section0Height / 3.5) {
+        dispatch(addAni());
       }
     });
-    if (box2Ani === true || location.pathname === "/about") {
-      introTeamInfoClass = "intro-team-info slideInDown";
-      employeeCartClass = "employee-cart fadeInUp";
-    }
-    if (box1Ani === true || location.pathname === "/about") {
-      testClass = "test slideInDown";
-      imgClasss = "scaleIn";
-      flameClass = "flaming-text";
-    }
   } else if (location.pathname === "/about") {
-    testClass = "test slideInDown";
-    imgClasss = "scaleIn";
-    flameClass = "flaming-text";
+    dispatch(addAni());
     window.addEventListener("scroll", () => {
       const box1 = document.querySelector(".box-1");
       const box1Height = box1.getBoundingClientRect().height;
       // console.log(box1Height);
       // console.log(window.pageYOffset);
-      if (window.pageYOffset > box1Height / 4) {
-        setBox2Ani(true);
-        // console.log(box2Ani)
+      if (window.pageYOffset > box1Height / 10) {
+        dispatch(addAni1());
       }
     });
-    if (box2Ani === true) {
-      introTeamInfoClass = "intro-team-info slideInDown";
-      employeeCartClass = "employee-cart fadeInUp";
-    }
   }
   //end
 
@@ -233,140 +216,136 @@ const Section1 = () => {
         </div> */}
 
         <div className='box-1'>
-          <div className='test-box'>
-            <div className='content-1'>
-              <div className={testClass}>
-                <p className='content-1-top'>WELCOME</p>
-                <p className='h3'>ABOUT TRUMP</p>
-                <div className={flameClass}>
-                  <p className='h3'>DIGITAL AGENCY</p>
+          {box1Ani === true ? (
+            <div className='test-box'>
+              <div className='content-1'>
+                <div className='test slideInDown'>
+                  <p className='content-1-top'>{first[0]}</p>
+                  <p className='h3'>{second[0]}</p>
+                  <div className='flaming-text'>
+                    <p className='h3'>{third[0]}</p>
+                  </div>
+                  <p>
+                   {forth[0]}
+                  </p>
+                  <p>
+                  {forth[1]}
+                  </p>
                 </div>
-                <p>
-                  When you're looking to embrace digital growth strategies and
-                  build a fresh, relevant brand, following the latest marketing
-                  trends won't do. Instead, you need a team that brings diverse
-                  creative and digital skill sets together, to deliver key ideas
-                  and innovative strategies.
-                </p>
-                <p>
-                  As TRUM, we do exactly that! With our rule-breaking,
-                  passionate approach to marketing, we help you build a brand
-                  that audiences find refreshingly relatable.
-                </p>
+              </div>
+              <div className='img-1'>
+                <img src={pic0} alt='about pic' className='scaleIn' />
               </div>
             </div>
-            <div className='img-1'>
-              <img src={pic0} alt='about pic' className={imgClasss} />
-            </div>
-          </div>
+          ) : <div className="imagion-box"></div>}
         </div>
 
         <div className='box-2'>
-          <div className='box-2-inner'>
-            <div className={introTeamInfoClass}>
-              <p>thinkers</p>
-              <p className='h2'>CREATIVE TEAM</p>
-              <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Dolorem impedit fuga recusandae distinctio, exercitationem est
-                aperiam iure rem alias ab, mollitia numquam. Ut, quam dolorem!
-              </p>
-            </div>
+          {box2Ani ? (
+            <div className='box-2-inner'>
+              <div className='intro-team-info slideInDown'>
+                <p>{first[1]}</p>
+                <p className='h2'>{second[1]}</p>
+                <p>
+                 {forth[1]}
+                </p>
+              </div>
 
-            <div
-              className='team-info'
-              onMouseDown={mouseDown}
-              onMouseLeave={mouseLeave}
-              onMouseUp={mouseUp}
-              onMouseMove={mouseMove}
-              onTouchEnd={touchEnd}
-              onTouchMove={touchMove}
-              onTouchStart={touchStart}
-            >
-              <div className='inner-team-info'>
-                <div className='team-info-slider'>
-                  <div className={employeeCartClass}>
-                    <Card>
-                      <Card.Img variant='top' src={pic1} />
-                      <Card.Body className='employee-info'>
-                        <Card.Title>YOURNAME</Card.Title>
-                        <Card.Text>POSITION</Card.Text>
-                      </Card.Body>
-                      <Card.Body className='employee-info-hidden'>
-                        <Card.Title>expert in...</Card.Title>
-                        <Card.Text>social logo</Card.Text>
-                      </Card.Body>
-                    </Card>
-                  </div>
-                  <div className={employeeCartClass}>
-                    <Card>
-                      <Card.Img variant='top' src={pic0} />
-                      <Card.Body className='employee-info'>
-                        <Card.Title>YOURNAME</Card.Title>
-                        <Card.Text>POSITION</Card.Text>
-                      </Card.Body>
-                      <Card.Body className='employee-info-hidden'>
-                        <Card.Title>expert in...</Card.Title>
-                        <Card.Text>social logo</Card.Text>
-                      </Card.Body>
-                    </Card>
-                  </div>
-                  <div className={employeeCartClass}>
-                    <Card>
-                      <Card.Img variant='top' src={pic1} />
-                      <Card.Body className='employee-info'>
-                        <Card.Title>YOURNAME</Card.Title>
-                        <Card.Text>POSITION</Card.Text>
-                      </Card.Body>
-                      <Card.Body className='employee-info-hidden'>
-                        <Card.Title>expert in...</Card.Title>
-                        <Card.Text>social logo</Card.Text>
-                      </Card.Body>
-                    </Card>
-                  </div>
-                  <div className={employeeCartClass}>
-                    <Card>
-                      <Card.Img variant='top' src={pic0} />
-                      <Card.Body className='employee-info'>
-                        <Card.Title>YOURNAME</Card.Title>
-                        <Card.Text>POSITION</Card.Text>
-                      </Card.Body>
-                      <Card.Body className='employee-info-hidden'>
-                        <Card.Title>expert in...</Card.Title>
-                        <Card.Text>social logo</Card.Text>
-                      </Card.Body>
-                    </Card>
-                  </div>
-                  <div className={employeeCartClass}>
-                    <Card>
-                      <Card.Img variant='top' src={pic1} />
-                      <Card.Body className='employee-info'>
-                        <Card.Title>YOURNAME</Card.Title>
-                        <Card.Text>POSITION</Card.Text>
-                      </Card.Body>
-                      <Card.Body className='employee-info-hidden'>
-                        <Card.Title>expert in...</Card.Title>
-                        <Card.Text>social logo</Card.Text>
-                      </Card.Body>
-                    </Card>
-                  </div>
-                  <div className={employeeCartClass}>
-                    <Card>
-                      <Card.Img variant='top' src={pic0} />
-                      <Card.Body className='employee-info'>
-                        <Card.Title>YOURNAME</Card.Title>
-                        <Card.Text>POSITION</Card.Text>
-                      </Card.Body>
-                      <Card.Body className='employee-info-hidden'>
-                        <Card.Title>expert in...</Card.Title>
-                        <Card.Text>social logo</Card.Text>
-                      </Card.Body>
-                    </Card>
+              <div
+                className='team-info'
+                onMouseDown={mouseDown}
+                onMouseLeave={mouseLeave}
+                onMouseUp={mouseUp}
+                onMouseMove={mouseMove}
+                onTouchEnd={touchEnd}
+                onTouchMove={touchMove}
+                onTouchStart={touchStart}
+              >
+                <div className='inner-team-info'>
+                  <div className='team-info-slider'>
+                    <div className='employee-cart fadeInUp'>
+                      <Card>
+                        <Card.Img variant='top' src={pic1} />
+                        <Card.Body className='employee-info'>
+                          <Card.Title>YOURNAME</Card.Title>
+                          <Card.Text>POSITION</Card.Text>
+                        </Card.Body>
+                        <Card.Body className='employee-info-hidden'>
+                          <Card.Title>expert in...</Card.Title>
+                          <Card.Text>social logo</Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </div>
+                    <div className='employee-cart fadeInUp'>
+                      <Card>
+                        <Card.Img variant='top' src={pic0} />
+                        <Card.Body className='employee-info'>
+                          <Card.Title>YOURNAME</Card.Title>
+                          <Card.Text>POSITION</Card.Text>
+                        </Card.Body>
+                        <Card.Body className='employee-info-hidden'>
+                          <Card.Title>expert in...</Card.Title>
+                          <Card.Text>social logo</Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </div>
+                    <div className='employee-cart fadeInUp'>
+                      <Card>
+                        <Card.Img variant='top' src={pic1} />
+                        <Card.Body className='employee-info'>
+                          <Card.Title>YOURNAME</Card.Title>
+                          <Card.Text>POSITION</Card.Text>
+                        </Card.Body>
+                        <Card.Body className='employee-info-hidden'>
+                          <Card.Title>expert in...</Card.Title>
+                          <Card.Text>social logo</Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </div>
+                    <div className='employee-cart fadeInUp'>
+                      <Card>
+                        <Card.Img variant='top' src={pic0} />
+                        <Card.Body className='employee-info'>
+                          <Card.Title>YOURNAME</Card.Title>
+                          <Card.Text>POSITION</Card.Text>
+                        </Card.Body>
+                        <Card.Body className='employee-info-hidden'>
+                          <Card.Title>expert in...</Card.Title>
+                          <Card.Text>social logo</Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </div>
+                    <div className='employee-cart fadeInUp'>
+                      <Card>
+                        <Card.Img variant='top' src={pic1} />
+                        <Card.Body className='employee-info'>
+                          <Card.Title>YOURNAME</Card.Title>
+                          <Card.Text>POSITION</Card.Text>
+                        </Card.Body>
+                        <Card.Body className='employee-info-hidden'>
+                          <Card.Title>expert in...</Card.Title>
+                          <Card.Text>social logo</Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </div>
+                    <div className='employee-cart fadeInUp'>
+                      <Card>
+                        <Card.Img variant='top' src={pic0} />
+                        <Card.Body className='employee-info'>
+                          <Card.Title>YOURNAME</Card.Title>
+                          <Card.Text>POSITION</Card.Text>
+                        </Card.Body>
+                        <Card.Body className='employee-info-hidden'>
+                          <Card.Title>expert in...</Card.Title>
+                          <Card.Text>social logo</Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          ) : <div className='imagion-box'></div>}
         </div>
 
         {/* <div className='box-3'>

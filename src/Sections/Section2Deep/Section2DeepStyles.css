@@ -151,6 +151,11 @@
   background-color: white;
 }
 
+.btn-ser{
+  border: none;
+  background: transparent;
+  width: 100%;
+}
 @media (min-width: 375px) {
   :root {
     --box-nav-fontsize: 0.7rem;

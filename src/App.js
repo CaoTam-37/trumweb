@@ -9,6 +9,7 @@ import Section4 from "./Sections/Section4/Section4";
 import Section5 from "./Sections/Section5/Section5";
 import Section0 from "./Sections/Section0/Section0";
 import Section1 from "./Sections/Section1/Section1";
+import SectionForm from './Sections/SectionForm/SectionForm';
 import Arrow from "./Sections/SectionArrow/Arrow";
 import ScrollToTop from "./Sections/ScrollToTop";
 import Admin from "./Sections/Admin/Admin";
@@ -36,6 +37,7 @@ const App = () => {
           <Route path='/services' element={<Section2Deep />} />
           <Route path='/news' element={<Section5 />} />
           <Route path='/admin' element={<Admin />} />
+          <Route path="/hiring" element={<SectionForm />} />
         </Routes>
         <Footer />
       </div>

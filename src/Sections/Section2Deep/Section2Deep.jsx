@@ -5,8 +5,13 @@ import "./Section2DeepStyles.css";
 import pic0 from "../../Img/3.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import { useSelector, useDispatch } from "react-redux";
+import { displaySer } from "../../features/sections/servicesSlice";
 
 const Section2Deep = () => {
+  const { data, display } = useSelector((state) => state.services);
+ const {service, serviceDescription} = display[0]
+  const dispatch = useDispatch();
   const [mContaiSerAni, setMContaiSerAni] = useState(false);
 
   //Add animation delay
@@ -17,14 +22,14 @@ const Section2Deep = () => {
   window.addEventListener("scroll", () => {
     const galaryServices = document.querySelector(".galary-services");
     const galaryServicesHeight = galaryServices.getBoundingClientRect().height;
-    //  console.log(box2Height);
-     console.log(galaryServicesHeight);
-     console.log(window.pageYOffset)
-    if (window.pageYOffset > galaryServicesHeight/5) {
-      setMContaiSerAni(true)
+    //console.log(box2Height);
+    //console.log(galaryServicesHeight);
+    //console.log(window.pageYOffset)
+    if (window.pageYOffset > galaryServicesHeight / 5) {
+      setMContaiSerAni(true);
     }
   });
-  if(mContaiSerAni === true){
+  if (mContaiSerAni === true) {
     serviceClass = "service fadeInUp2";
   }
   //end
@@ -36,24 +41,18 @@ const Section2Deep = () => {
           <div className='intro-services-job'>
             <h2 className=''>our services</h2>
           </div>
+
           <Col md={8} className='services-job'>
             <div className='services-job-text'>
-              <h4 className='service-job-name'>Website Development</h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Possimus minus sit harum dolores! Modi tempora nobis commodi
-                quibusdam maiores maxime dicta nesciunt soluta quam, itaque
-                consequuntur a aliquid dolorum fugit quas alias tempore,
-                delectus voluptas? Pariatur ullam in consequatur velit?
-              </p>
+              <h4 className='service-job-name'>{service}</h4>
+              <p>{serviceDescription}</p>
             </div>
-
             <div className='box-services-job'>
               <Row className='galary-services'>
-                <Col md={6} className="service fadeInUp2">
+                <Col md={6} className='service fadeInUp2'>
                   <img src={pic0} alt='' className='service-pic' />
                 </Col>
-                <Col md={6} className="service fadeInUp2">
+                <Col md={6} className='service fadeInUp2'>
                   <img src={pic0} alt='' className='service-pic' />
                 </Col>
                 <Col md={12} className={serviceClass}>
@@ -62,52 +61,27 @@ const Section2Deep = () => {
               </Row>
             </div>
           </Col>
+
           <Col md={4} className='services-nav'>
             <div className='outer-box-nav'>
               <p className='h5'>all services</p>
               <div className='box-nav'>
-                <p>
-                  website development
-                  <FontAwesomeIcon
-                    icon={faChevronRight}
-                    className='font-arrow'
-                  />
-                </p>
-                <p>
-                  website development
-                  <FontAwesomeIcon
-                    icon={faChevronRight}
-                    className='font-arrow'
-                  />
-                </p>
-                <p>
-                  website development
-                  <FontAwesomeIcon
-                    icon={faChevronRight}
-                    className='font-arrow'
-                  />
-                </p>
-                <p>
-                  website development
-                  <FontAwesomeIcon
-                    icon={faChevronRight}
-                    className='font-arrow'
-                  />
-                </p>
-                <p>
-                  website development
-                  <FontAwesomeIcon
-                    icon={faChevronRight}
-                    className='font-arrow'
-                  />
-                </p>
-                <p>
-                  website development
-                  <FontAwesomeIcon
-                    icon={faChevronRight}
-                    className='font-arrow'
-                  />
-                </p>
+                {data.map(({ service, id }) => {
+                  return (
+                    <button
+                      className='btn-ser'
+                      onClick={() => dispatch(displaySer(id))}
+                    >
+                      <p key={id}>
+                        {service}
+                        <FontAwesomeIcon
+                          icon={faChevronRight}
+                          className='font-arrow'
+                        />
+                      </p>
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </Col>

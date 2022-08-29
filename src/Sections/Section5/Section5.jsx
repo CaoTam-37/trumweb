@@ -7,40 +7,51 @@ import pic1 from "../../Img/12.jpg";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
 import "./Section5Styles.css";
+import { useSelector, useDispatch } from "react-redux";
+import Newspaper from "./Newspaper";
 
 const Section5 = () => {
+  const { id, number, headline, part0, part1, writerName } = useSelector(
+    (state) => state.newspaper.displayNews[0]
+  );
   const [picAni, setPicAni] = useState(false);
   const location = useLocation();
   let headLineNewsClass = "headline-news word-lineup";
   let headLineIntroClass = "headline-intro lineup-1";
   let infoOfNewsClass = "info-of-news rightup";
-  let effectBoxClass = "img-effect-box"
+  let effectBoxClass = "img-effect-box";
   const isMounted = useRef(false);
-  useEffect(()=>{
+  useEffect(() => {
     window.addEventListener("scroll", () => {
       const headlineBox = document.querySelector(".inner-headline-box");
       const headlineBoxHeight = headlineBox.getBoundingClientRect().height;
-    
+
       // console.log(box1);
       //  console.log(box1Height);
-      if (window.pageYOffset > headlineBoxHeight /2) {
+      if (window.pageYOffset > headlineBoxHeight / 2) {
         setPicAni(true);
         // console.log(arrowAni);
-      }else{
+      } else {
         setPicAni(false);
       }
     });
-  })
+  });
   if (picAni === true) {
     effectBoxClass = "img-effect-box scaleIn1";
-  }else{
+  } else {
     effectBoxClass = "img-effect-box";
   }
 
   return (
     <>
       <Container className='news-container'>
-        <div className='news-section'>
+      <Newspaper
+          headline={headline}
+          part0={part0}
+          part1={part1}
+          writerName={writerName}
+        />
+        {/* <div className='news-section'>
           <div className='headline-box'>
             <div className='inner-headline-box'>
               <div className='center-box'>
@@ -130,7 +141,8 @@ const Section5 = () => {
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
+        
       </Container>
     </>
   );

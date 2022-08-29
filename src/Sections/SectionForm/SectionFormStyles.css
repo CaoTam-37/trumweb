@@ -1,0 +1,31 @@
+.form-box{
+    /* border: 2px solid black; */
+    height: 82vh;
+    padding-top: 50px;
+}
+
+.form-box h1,h3{
+    text-align: center;
+    text-transform: capitalize;
+}
+
+.input-box{
+    /* border: 2px solid red; */
+    width: 60%;
+    margin: 40px auto;
+}
+
+.btn-submit{
+    width: 30%;
+    margin: 50px auto;
+    border: none;
+    padding: 20px 40px;
+    border-radius: 10px;
+    background-color: gainsboro;
+}
+.btn-submit:active{
+    outline: none;
+    transform: scale(0.9);
+    background-color: rgb(53, 53, 243);
+}
+
